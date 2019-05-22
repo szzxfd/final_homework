@@ -3,6 +3,7 @@
 #include <QPainter>
 #include <QMouseEvent>
 
+
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
@@ -40,7 +41,8 @@ void MainWindow::loadTowerPosition()
         QPoint(400, 320),
         QPoint(540, 320),
         //fourth line
-
+        QPoint(225, 445),
+        QPoint(405, 445)
     };
     int num = sizeof(pos) / sizeof(pos[0]);
 
@@ -104,6 +106,10 @@ void MainWindow::mousePressEvent(QMouseEvent *event)
 
         ++ curPos;
     }
+    //鼠标恢复
+    this->setCursor(Qt::ArrowCursor);
+
+    //位点变暗
     for(auto &temp: this->_TowerPositionList)
     {
         temp.setHasShow(false);
@@ -121,6 +127,10 @@ void MainWindow::mousePressEvent(QMouseEvent *event)
 
 void MainWindow::on_pushButton_clicked()
 {
+    //改变鼠标形状
+    QCursor *myCursor = new QCursor(QPixmap(":/image/move_basic_tower.png"),-1,-1);
+    this->setCursor(*myCursor);
+
     for(auto &temp: this->_TowerPositionList)
     {
         temp.setHasShow();
