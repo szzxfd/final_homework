@@ -1,6 +1,6 @@
 #-------------------------------------------------
 #
-# Project created by QtCreator 2019-05-15T20:21:44
+# Project created by QtCreator 2019-05-22T18:45:26
 #
 #-------------------------------------------------
 
@@ -8,7 +8,7 @@ QT       += core gui
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
-TARGET = demo
+TARGET = demo_2
 TEMPLATE = app
 
 # The following define makes your compiler emit warnings if you use
@@ -26,16 +26,33 @@ DEFINES += QT_DEPRECATED_WARNINGS
 SOURCES += \
         main.cpp \
         mainwindow.cpp \
+    basictower.cpp \
+    enemy.cpp \
+    plistreader.cpp \
+    waypoint.cpp \
     towerposition.cpp \
-    basictower.cpp
+    basicbullet.cpp
 
 HEADERS += \
         mainwindow.h \
+    basictower.h \
+    enemy.h \
+    plistreader.h \
     towerposition.h \
-    basictower.h
+    utility.h \
+    waypoint.h \
+    basicbullet.h
 
 FORMS += \
         mainwindow.ui
 
 RESOURCES += \
-    resources.qrc
+    resourses.qrc
+
+DISTFILES += \
+    image/bullet/image 2410.png \
+    image/bullet/image 4927.png \
+    image/bullet/image 4964.png \
+    image/bullet/image 5038.png \
+    image/bullet/image 8219.png
+

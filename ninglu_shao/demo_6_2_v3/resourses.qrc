@@ -1,0 +1,18 @@
+<RCC>
+    <qresource prefix="/">
+        <file>config/Info.plist</file>
+        <file>config/TowersPosition.plist</file>
+        <file>config/Waves.plist</file>
+        <file>image/basic_tower.png</file>
+        <file>image/enemy.png</file>
+        <file>image/map_1.bmp</file>
+        <file>image/map_2.bmp</file>
+        <file>image/move_basic_tower.png</file>
+        <file>image/tower_position.png</file>
+        <file>image/bullet/image 2410.png</file>
+        <file>image/bullet/image 4927.png</file>
+        <file>image/bullet/image 4964.png</file>
+        <file>image/bullet/image 5038.png</file>
+        <file>image/bullet/image 8219.png</file>
+    </qresource>
+</RCC>
