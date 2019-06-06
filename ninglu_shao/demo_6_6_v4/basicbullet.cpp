@@ -43,9 +43,12 @@ void BasicBullet::hitTarget()
     // 可能多个炮弹击中敌人,而其中一个将其消灭,导致敌人delete
     // 后续炮弹再攻击到的敌人就是无效内存区域
     // 因此先判断下敌人是否还有效
-    if (_game->enemyList().indexOf(_targetEnemy) != -1)   // Qlist::indexOf(A)  find A in the list
+    if (_game->enemyList().indexOf(_targetEnemy) != -1) {   // Qlist::indexOf(A)  find A in the list
         _targetEnemy->getDamage(_damage);
-    _game->removedBullet(this);
+
+        _targetEnemy->slow();       //被减速塔攻击时触发减速，每被攻击一次就刷新一次
+    }
+    _game->removedBullet(this);    
 }
 
 void BasicBullet::setCurrentPos(QPoint pos)

@@ -19,12 +19,14 @@ Enemy::Enemy(WayPoint *startWayPoint, MainWindow *game, const QPixmap &sprite)
     , m_active(false)
     , m_maxHp(40)
     , m_currentHp(40)
-    , m_walkingSpeed(2)
+    , m_walkingSpeed(3)
     , m_pos(startWayPoint->pos())
     , m_destinationWayPoint(startWayPoint->nextWayPoint())
     , m_game(game)
     , m_sprite(sprite)
 {
+    m_slowTimer = new QTimer(this);
+    connect(m_slowTimer, SIGNAL(timeout()), this, SLOT(recover()));
 }
 
 Enemy::~Enemy()
@@ -65,13 +67,21 @@ void Enemy::move()
     // 还在前往航点的路上
     // 目标航点的坐标
     QPoint targetPoint = m_destinationWayPoint->pos();
+
     // 未来修改这个可以添加移动状态,加快,减慢,m_walkingSpeed是基准值
+    qreal movementSpeed = m_walkingSpeed;
+//    if(this->m_slowed)
+//        movementSpeed = 1;
+//    else
+//        movementSpeed = m_walkingSpeed;
 
     // 向量标准化
-    qreal movementSpeed = m_walkingSpeed;
     QVector2D normalized(targetPoint - m_pos);
     normalized.normalize();
-    m_pos += normalized.toPoint() * movementSpeed;
+    if(!showSlow())
+        m_pos += normalized.toPoint() * movementSpeed;
+    else
+        m_pos += normalized.toPoint() * 1;
 }
 
 void Enemy::draw(QPainter *painter) const
@@ -143,5 +153,21 @@ void Enemy::getAttacked(BasicTower *attacker)
 {
     m_attackedTowersList.push_back(attacker);
 }
+//减速相关
+void Enemy::slow(bool slowed)   //更改状态
+{
+    this->m_slowed = slowed;
+    m_slowTimer->start(1000);//just test
+}
 
+bool Enemy::showSlow() const
+{
+    return this->m_slowed;
+}
 
+void Enemy::recover()   //从减速状态恢复
+{
+    if(showSlow())
+        slow(false);
+    m_slowTimer->stop();
+}

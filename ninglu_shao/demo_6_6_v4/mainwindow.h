@@ -5,6 +5,7 @@
 #include <QList>
 #include "towerposition.h"
 #include "basictower.h"
+#include "magictower.h"
 #include "enemy.h"
 #include "basicbullet.h"
 class WayPoint;
@@ -46,6 +47,8 @@ private slots:
 //private function
     //void on_label_customContextMenuRequested(const QPoint &pos);
 
+    void on_pushButton_2_clicked();
+
 private:
     void loadTowerPosition();
 
@@ -78,6 +81,8 @@ private:
 
 //**************************************************************//
     QList<BasicBullet *>    _BulletList;
+
+    int _towerType = 0;
 };
 
 #endif // MAINWINDOW_H

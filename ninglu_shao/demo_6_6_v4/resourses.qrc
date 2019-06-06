@@ -14,5 +14,6 @@
         <file>image/bullet/image 4964.png</file>
         <file>image/bullet/image 5038.png</file>
         <file>image/bullet/image 8219.png</file>
+        <file>image/magic_tower.png</file>
     </qresource>
 </RCC>

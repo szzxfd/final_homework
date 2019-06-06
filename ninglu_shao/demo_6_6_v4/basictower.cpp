@@ -1,4 +1,3 @@
-
 #include "basictower.h"
 #include "basicbullet.h"
 #include "mainwindow.h"
@@ -6,16 +5,17 @@
 #include "utility.h"
 #include <QPainter>
 
-const QSize BasicTower::_fixedSize(77, 73);
+//const QSize BasicTower::_fixedSize(77, 73);
 
-BasicTower::BasicTower(QPoint pos, MainWindow *game, const QPixmap &picture)
+BasicTower::BasicTower(QPoint pos, MainWindow *game, const QPixmap &picture, const QSize fixedSize, int damage, int attackRange, int attackSpeed, int cost)
     : _pos(pos)
     , _picture(picture)
-    , _damage(1000)  //暂时99999
-    , _attackRange(100)
-    , _attackSpeed(1000)    //单位ms
-    , _cost(0)
+    , _fixedSize(fixedSize)
+    , _attackRange(attackRange)
+    , _attackSpeed(attackSpeed)
+    , _cost(cost)
     , _hasShowRange(false)
+    , _damage(damage)
     , _game(game)
     , _chosenEnemy(NULL)
 {
@@ -26,10 +26,10 @@ BasicTower::BasicTower(QPoint pos, MainWindow *game, const QPixmap &picture)
 
 }
 
-
 BasicTower::~BasicTower()
 {
-
+    delete _shootTimer;
+    _shootTimer = NULL;
 }
 
 QPoint BasicTower::getPos() const
@@ -102,11 +102,11 @@ void BasicTower::checkEnemyInRange()
         m_rotationSprite = qRadiansToDegrees(qAtan2(normalized.y(), normalized.x())) - 90;
 */
         // 如果敌人脱离攻击范围
-        if (!collisionWithCircle(_pos, _attackRange, _chosenEnemy->pos(), 1))
-
+        if (!collisionWithCircle(_pos, _attackRange, _chosenEnemy->pos(), 1)) {
+//            if(_chosenEnemy->showSlow())
+//                _chosenEnemy->slow(false);
             lostSightOfEnemy();
-
-
+        }
     }
     else
     {
@@ -128,6 +128,8 @@ void BasicTower::checkEnemyInRange()
 
 void BasicTower::lostSightOfEnemy()
 {
+//    if(_chosenEnemy->showSlow())
+//        _chosenEnemy->slow(false);
     _chosenEnemy->gotLostSight(this);
     if (_chosenEnemy)
         _chosenEnemy = NULL;

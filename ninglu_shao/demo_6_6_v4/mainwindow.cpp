@@ -15,7 +15,7 @@ MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
     , _waves(0)
-    , _playerHp(4)    //暂时4点血
+    , _playerHp(5)    //暂时4点血
     , _playrGold(99999) //无敌
     , _gameEnded(false)
     , _gameWin(false)
@@ -134,11 +134,23 @@ void MainWindow::mousePressEvent(QMouseEvent *event)
     {
         if(curPos->hasShow() && curPos->inRange(pressPos) && !curPos->hasTower())  //以后要添加金币条件
         {
-            curPos->setHasTower();
-            BasicTower *tower = new BasicTower(curPos->getPos(), this);
-            this->_BasicTowerList.push_back(tower);
-            update();
-            break;
+            if(_towerType == 1)
+            {
+                curPos->setHasTower();
+                BasicTower *tower = new BasicTower(curPos->getPos(), this);
+                this->_BasicTowerList.push_back(tower);
+                update();
+                break;
+            }
+            else if(_towerType == 2)
+            {
+                curPos->setHasTower();
+                BasicTower *tower = new MagicTower(curPos->getPos(), this);
+                this->_BasicTowerList.push_back(tower);
+                update();
+                break;
+            }
+
         }
         if(curPos->hasTower() && curPos->inRange(pressPos))
         {
@@ -158,8 +170,11 @@ void MainWindow::mousePressEvent(QMouseEvent *event)
 
         ++ curPos;
     }
+
     //鼠标恢复
     this->setCursor(Qt::ArrowCursor);
+    //type恢复
+    this->_towerType = 0;
 
     //位点变暗
     for(auto &temp: this->_TowerPositionList)
@@ -183,6 +198,20 @@ void MainWindow::on_pushButton_clicked()
     QCursor *myCursor = new QCursor(QPixmap(":/image/move_basic_tower.png"),-1,-1);
     this->setCursor(*myCursor);
 
+    _towerType = 1;     //表示第一种塔
+    for(auto &temp: this->_TowerPositionList)
+    {
+        temp.setHasShow();
+        update();
+    }
+}
+
+void MainWindow::on_pushButton_2_clicked()
+{
+    QCursor *myCursor = new QCursor(QPixmap(":/image/magic_tower.png"),-1,-1);
+    this->setCursor(*myCursor);
+
+    _towerType = 2;     //表示第二种塔
     for(auto &temp: this->_TowerPositionList)
     {
         temp.setHasShow();
@@ -357,3 +386,4 @@ void MainWindow::addBullet(BasicBullet *bullet)
    Q_ASSERT(bullet);
    _BulletList.push_back(bullet);
 }
+

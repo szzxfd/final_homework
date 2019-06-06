@@ -5,6 +5,7 @@
 #include <QPoint>
 #include <QSize>
 #include <QPixmap>
+#include <QTimer>
 
 class WayPoint;
 class QPainter;
@@ -27,14 +28,20 @@ public:
     void gotLostSight(BasicTower *attacker);
     void getAttacked(BasicTower *attacker);
 
+    void slow(bool slowed = true);      //设置是否被减速
+    bool showSlow() const;              //返回是否被减速
+
 public slots:
     void doActivate();
+    void recover();
 
 private:
     bool			m_active;
     int				m_maxHp;
     int				m_currentHp;
     qreal			m_walkingSpeed;
+    bool m_slowed = false;       //记录当前是否是减速状态
+    QTimer * m_slowTimer;           //调整减速时间
 
 
     QPoint			m_pos;
@@ -44,7 +51,6 @@ private:
 
     const QPixmap	m_sprite;
     static const QSize ms_fixedSize;
-
 
 
 };

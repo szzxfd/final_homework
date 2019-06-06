@@ -14,8 +14,11 @@ class BasicTower : public QObject
 {
     Q_OBJECT
 public:
-    BasicTower(QPoint pos, MainWindow *game, const QPixmap &picture = QPixmap(":/image/basic_tower.png"));
-    ~BasicTower();
+    //BasicTower(QPoint pos, MainWindow *game, const QPixmap &picture = QPixmap(":/image/basic_tower.png"));
+    BasicTower(QPoint pos, MainWindow *game,
+         const QPixmap &picture = QPixmap(":/image/basic_tower.png"), const QSize fixedSize = QSize(77, 73),
+         int damage = 1, int attackRange = 100, int attackSpeed = 1000, int cost = 0);  //ms
+    virtual ~BasicTower();
     QPoint getPos() const;
     bool hasShowRange() const;
     void setHasShowRange(bool hasShowRange = true);
@@ -35,29 +38,31 @@ public slots:
 
 //************************** zcy Bullet ***********************//
 private slots:
-    void shootWeapon();
+    virtual void shootWeapon();
 
 private:
-    //bool _attacking;
-    int _damage;
-    int _attackRange;
-    int _attackSpeed;
-    int _cost;
-    bool _hasShowRange;
-
-    MainWindow * _game;     //后期与enemy的接口
 
 //***********  zcy Bullet ************//
-    Enemy * _chosenEnemy;
+
     QTimer * _shootTimer;
 
     QPoint _pos;
     QPixmap _picture;
 
 
-    static const QSize _fixedSize;
+    const QSize _fixedSize;
 
+    //bool _attacking;
 
+    int _attackRange;
+    int _attackSpeed;
+    int _cost;
+    bool _hasShowRange;
+
+protected:  
+    int _damage;
+    MainWindow * _game;     //后期与enemy的接口
+    Enemy * _chosenEnemy;
 };
 
 #endif // BASICTOWER_H

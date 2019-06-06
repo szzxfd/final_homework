@@ -31,7 +31,8 @@ SOURCES += \
     plistreader.cpp \
     waypoint.cpp \
     towerposition.cpp \
-    basicbullet.cpp
+    basicbullet.cpp \
+    magictower.cpp
 
 HEADERS += \
         mainwindow.h \
@@ -41,7 +42,8 @@ HEADERS += \
     towerposition.h \
     utility.h \
     waypoint.h \
-    basicbullet.h
+    basicbullet.h \
+    magictower.h
 
 FORMS += \
         mainwindow.ui
